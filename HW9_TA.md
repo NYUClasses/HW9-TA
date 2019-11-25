@@ -68,17 +68,71 @@ Please report your answer by filling in the blanks below.
 Question 3.
 ===========
 
+Now we will use the Mauna Loa C02 concentrations dataset. We will
+predict the response of the Temperature based on Wind.
+
+A reminder:
+
+### Residual
+
+Deviation of the observed value to the estimated value (sample mean)
+$$residual=y\_i - \\hat{y\_i}$$
+ where $\\hat{y\_i}$ is the estimated value
+
+### Here are some assumptions that linear regression makes:
+
+-   The residuals should be close to zero.
+-   There should be equal variance around the regression line
+    (homoscedasticity).
+-   Residuals should be normally distributed.
+-   Independent variables and residuals should not be correlated.
+
+<!-- -->
+
+    data(airquality)
+
+This is the data we will fit a linear model to.
+![](HW9_TA_files/figure-markdown_strict/unnamed-chunk-3-1.png)
+
 A.
 --
 
-What is the probability that at least two pairs of people (4 people are
-involved here. 2 people with one birthday, and another 2 people with
-another birthday) in a room of 20 share the same birthday. Please report
-your work.
+Create and fit a linear model to predict Temperature from Wind.
 
 B.
 --
 
-What is the number of people that need to be present in a room in order
-for there to be a 50% chance that two people share the same birthday?
-Please report your work.
+Vizualize how your model performed on the data by plotting the
+regression line on top of the data points.
+
+C.
+--
+
+Look at the residuals. Are they close to zero?
+
+    #look at the median residual value. Close to zero is best
+    #help(summary)
+
+D.
+--
+
+Plot predicted temperature vs observed temperature. A strong model
+should show a strong correlation
+
+E.
+--
+
+Plot Wind vs predicted Temperature, and on the same plot, add Wind vs
+measured Temperature, and the regression line.
+
+F.
+--
+
+Residuals should be normally distributed. Plot the density of the
+residuals. Are they normally distributed? (help(residuals))
+
+G.
+--
+
+Independent variables and residuals should not be correlated. Calculate
+the correlation between the Wind and the residuals.

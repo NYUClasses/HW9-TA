@@ -1,6 +1,6 @@
 ---
 title: "HW9-TA"
-output: md_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE, echo = FALSE}
@@ -62,15 +62,77 @@ Please report your answer by filling in the blanks below.
 
 * Reject null? (Y/N) and why:
 
-
 # Question 3. 
+Now we will use the Mauna Loa C02 concentrations dataset. We will predict the response of the Temperature based on Wind.
 
-## A. 
-What is the probability that at least two pairs of people (4 people are involved here. 2 people with one birthday, and another 2 people with another birthday) in a room of 20 share the same birthday. Please report your work. 
+A reminder: 
 
-## B. 
-What is the number of people that need to be present in a room in order for there to be a 50% chance that two people share the same birthday? Please report your work.
+### Residual 
+Deviation of the observed value to the estimated value (sample mean)
+$$residual=y_i - \hat{y_i}$$
+where $\hat{y_i}$ is the estimated value
+
+### Here are some assumptions that linear regression makes: 
+* The residuals should be close to zero.
+* There should be equal variance around the regression line (homoscedasticity).
+* Residuals should be normally distributed.
+* Independent variables and residuals should not be correlated.
+
+```{r}
+data(airquality)
+```
 
 
+This is the data we will fit a linear model to. 
+```{r, echo = FALSE}
+ggplot(data = airquality) +
+  geom_point(aes(x=Wind, y=Temp)) +
+  theme_bw()
+```
 
+## A.
+Create and fit a linear model to predict Temperature from Wind.
+
+```{r, include = F}
+#linear_regression <- lm(Temp ~ Wind, data = airquality)
+```
+
+
+## B.
+Vizualize how your model performed on the data by plotting the regression line on top of the data points. 
+
+
+## C. 
+Look at the residuals. Are they close to zero? 
+```{r}
+#look at the median residual value. Close to zero is best
+#help(summary)
+```
+
+
+## D. 
+Plot predicted temperature vs observed temperature. A strong model should show a strong correlation
+
+
+## E. 
+Plot Wind vs predicted Temperature, and on the same plot, add Wind vs measured Temperature, and the regression line.
+```{r, include = FALSE}
+# Extract coefficients from the model
+# plot the regression line on the predicted values
+# plot the original test values
+```
+
+## F. 
+Residuals should be normally distributed. Plot the density of the residuals. Are they normally distributed? (help(residuals))
+```{r, include= FALSE}
+#residuals_lin <- residuals(linear_regression)
+#ggplot(data=residvpredict) +
+#  geom_density(aes(residual))
+```
+
+## G.
+Independent variables and residuals should not be correlated. Calculate the correlation between the Wind and the residuals. 
+```{r, include = FALSE}
+#cor.test(train_regression$Wind, resid(linear_regression))
+```
 
