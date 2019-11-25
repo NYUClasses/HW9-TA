@@ -68,6 +68,35 @@ Please report your answer by filling in the blanks below.
 Question 3.
 ===========
 
+A
+-
+
+You want to design a new study comparing a new chemotherapy to radiation
+for breast cancer. The outcome you are measuring is the reduction of
+tumor size. You want a sample size of n=100/treatment arm. You expect
+that the average difference in tumor size reduction in the chemotherapy
+group vs radiation group will be 2, and standard deviation will be equal
+to 5. What power will this yield?
+
+B
+-
+
+If we wanted 90% power, what sample size would we need? (Keeping all
+other parameters the same)
+
+C
+-
+
+How would the power be affected by decreasing the standard deviation?
+
+D
+-
+
+How would the power be affected by increasing the effect size?
+
+Question 4.
+===========
+
 Now we will use the Mauna Loa C02 concentrations dataset. We will
 predict the response of the Temperature based on Wind.
 
