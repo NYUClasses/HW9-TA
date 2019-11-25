@@ -68,12 +68,7 @@ Now we will use the Mauna Loa C02 concentrations dataset. We will predict the re
 A reminder: 
 
 ### Residual 
-Deviation of the observed value to the estimated value (sample mean)
-$$residual=y_i - \hat{y_i}$$
-
-residual= y;<sub>i</sub> - y;&prime; <sub>i</sub>
-
-where $\hat{y_i}$ is the estimated value
+Deviation of the observed value to the estimated value. 
 
 ### Here are some assumptions that linear regression makes: 
 * The residuals should be close to zero.

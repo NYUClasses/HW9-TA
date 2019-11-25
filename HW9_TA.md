@@ -75,12 +75,7 @@ A reminder:
 
 ### Residual
 
-Deviation of the observed value to the estimated value (sample mean)
-$$residual=y\_i - \\hat{y\_i}$$
-
-residual= y;<sub>i</sub> - y;′ <sub>i</sub>
-
-where $\\hat{y\_i}$ is the estimated value
+Deviation of the observed value to the estimated value.
 
 ### Here are some assumptions that linear regression makes:
 
