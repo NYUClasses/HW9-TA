@@ -1,0 +1,86 @@
+Question 1.
+===========
+
+The Zoology department of The University of Adelaide was curious to see
+if Native snails and Exotic snails had the ability to survive in
+different conditions. The two different species of snail were exposed to
+different relative humidities and temperatures for 1, 2, 3, or 4 weeks.
+The snail data included in the package `MASS`.
+
+A.
+--
+
+We want to know whether Species A or Species B survives better in each
+of the conditions and each of the exposure times. Plot a boxplot for
+each relative humitidy (one new plot for 60%, 65.8%, 70.5%, and 75.8%
+relative humidity). The x axis of the boxplot should be Temperature, the
+y axis should the the number of deaths, and the boxplots should be
+filled with the species type.
+![](HW9_TA_files/figure-markdown_strict/boxplot-1.png)
+
+B.
+--
+
+Use the appropriate statistical test to investigate whether Species A
+survives bettern than Species B in 60% Relative Humidity regardless of
+temperature. If you take temperature into account, does your conclusion
+change?
+
+Please report your answer by filling in the blanks below.
+
+-   Null Hypothesis:
+
+-   Test used and reason:
+
+-   P-value:
+
+-   Reject null? (Y/N) and why:
+
+Question 2.
+===========
+
+Now we will use the thyroid data. We want to know whether patients
+treated with different doses of the drug sorafenib respond differently.
+Split the patients into high treatment and low treatment at your
+discretion. Keep in mind that a more even split in the number of
+patients in each group is better.
+
+A.
+--
+
+Plot a boxplot of tumor response in the two patient groups. The x axis
+should be patient groups, the y axis should be tumor response.
+
+B.
+--
+
+Use the appropriate statistical test to investigate whether tumor
+response is different between the two groups.
+
+Please report your answer by filling in the blanks below.
+
+-   Null Hypothesis:
+
+-   Test used and reason:
+
+-   P-value:
+
+-   Reject null? (Y/N) and why:
+
+Question 3.
+===========
+
+A.
+--
+
+What is the probability that at least two pairs of people (4 people are
+involved here. 2 people with one birthday, and another 2 people with
+another birthday) in a room of 20 share the same birthday. Please report
+your work.
+
+B.
+--
+
+What is the number of people that need to be present in a room in order
+for there to be a 50% chance that two people share the same birthday?
+Please report your work.

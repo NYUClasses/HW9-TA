@@ -1,6 +1,6 @@
 ---
 title: "HW9-TA"
-output: html_document
+output: md_document
 ---
 
 ```{r setup, include=FALSE, echo = FALSE}
