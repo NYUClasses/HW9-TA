@@ -77,7 +77,10 @@ A reminder:
 
 Deviation of the observed value to the estimated value (sample mean)
 $$residual=y\_i - \\hat{y\_i}$$
- where $\\hat{y\_i}$ is the estimated value
+
+residual= y;<sub>i</sub> - y;′ <sub>i</sub>
+
+where $\\hat{y\_i}$ is the estimated value
 
 ### Here are some assumptions that linear regression makes:
 
@@ -117,7 +120,7 @@ D.
 --
 
 Plot predicted temperature vs observed temperature. A strong model
-should show a strong correlation
+should show a strong correlation.
 
 E.
 --
