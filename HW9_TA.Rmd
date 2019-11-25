@@ -15,10 +15,10 @@ library(MASS)
 ```
 
 # Question 1. 
-The Zoology department of The University of Adelaide was curious to see if Native snails and Exotic snails had the ability to survive in different conditions. The two different species of snail were exposed to different relative humidities and temperatures for 1, 2, 3, or 4 weeks. The snail data included in the package `MASS`. 
+The Zoology department of The University of Adelaide was curious to see if Native snails and Exotic snails had the same ability to survive in different conditions. The two different species of snail were exposed to different relative humidities and temperatures for 1, 2, 3, or 4 weeks. The snail data is included in the package `MASS`. 
 
 ## A. 
-We want to know whether Species A or Species B survives better in each of the conditions and each of the exposure times. Plot a boxplot for each relative humitidy (one new plot for 60%, 65.8%, 70.5%, and 75.8% relative humidity). The x axis of the boxplot should be Temperature, the y axis should the the number of deaths, and the boxplots should be filled with the species type. 
+ Plot a boxplot for each relative humitidy (one new plot for 60%, 65.8%, 70.5%, and 75.8% relative humidity). The x axis of the boxplot should be Temperature, the y axis should the the number of deaths, and the boxplots should be filled with the species type. 
 ```{r boxplot, echo = FALSE}
 ggplot(snails, aes(x = as.factor(Temp), y = Deaths, fill = Species)) +
   geom_boxplot() +
@@ -29,7 +29,7 @@ ggplot(snails, aes(x = as.factor(Temp), y = Deaths, fill = Species)) +
 ```
 
 ## B. 
-Use the appropriate statistical test to investigate whether Species A survives bettern than Species B in 60% Relative Humidity regardless of temperature. If you take temperature into account, does your conclusion change? 
+Use the appropriate statistical test to investigate whether Species A survives better than Species B in 60% Relative Humidity regardless of temperature. If you take temperature into account, does your conclusion change? 
 
 Please report your answer by filling in the blanks below. 
 
