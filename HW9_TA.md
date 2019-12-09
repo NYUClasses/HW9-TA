@@ -76,6 +76,37 @@ Please report your answer by filling in the blanks below.
 -   Reject null? (Y/N) and why: Yes, because it is unlikely that Species
     and Death are independent (Pvalue 4.743e-06)
 
+Alternative B.
+--------------
+
+-   Null Hypothesis: There is no difference between the number of deaths
+    in Species A and the number of deaths in Species B.
+
+-   Test used and reason: We use a T-test because we are comparing the
+    mean number of deaths.
+
+-   P-value:
+
+<!-- -->
+
+    t.test(snails$Deaths ~ snails$Species)
+
+    ## 
+    ##  Welch Two Sample t-test
+    ## 
+    ## data:  snails$Deaths by snails$Species
+    ## t = -3.1487, df = 68.37, p-value = 0.002432
+    ## alternative hypothesis: true difference in means is not equal to 0
+    ## 95 percent confidence interval:
+    ##  -3.7779113 -0.8470887
+    ## sample estimates:
+    ## mean in group A mean in group B 
+    ##        1.708333        4.020833
+
+-   Reject null? (Y/N) and why: Yes, because it is unlikely that the
+    number of deaths are the same between each species. (Pvalue
+    0.002432)
+
 Question 2.
 ===========
 
@@ -100,7 +131,7 @@ should be patient groups, the y axis should be tumor response.
       theme_bw() + 
       ggsci::scale_fill_futurama()
 
-![](HW9_TA_files/figure-markdown_strict/unnamed-chunk-5-1.png)
+![](HW9_TA_files/figure-markdown_strict/unnamed-chunk-6-1.png)
 
 B.
 --
@@ -226,12 +257,14 @@ Deviation of the observed value to the estimated value.
     data(airquality)
 
 This is the data we will fit a linear model to.
-![](HW9_TA_files/figure-markdown_strict/unnamed-chunk-10-1.png)
+![](HW9_TA_files/figure-markdown_strict/unnamed-chunk-11-1.png)
 
 A.
 --
 
 Create and fit a linear model to predict Temperature from Wind.
+
+    linear_regression <- lm(Temp ~ Wind, data = airquality)
 
 B.
 --
@@ -239,13 +272,54 @@ B.
 Vizualize how your model performed on the data by plotting the
 regression line on top of the data points.
 
+    linear_predict <- predict(linear_regression)
+    plot_lin_pred <- data.frame(Temp_pred = linear_predict, Temp = airquality$Temp, Wind = airquality$Wind)
+
+    # Extract coefficients from the model, plot the regression line on the predicted values, plot the original test values
+    linear_regression$finalModel$coefficients
+
+    ## NULL
+
+    ggplot(data = plot_lin_pred)+
+      geom_point(aes(x=Wind, y = Temp_pred, col =  "Predicted")) + 
+      ggtitle("Linear Regression model on Test Set") +
+      geom_abline(aes(intercept = 90.493474, slope = -1.27743, col="Regression Line")) +
+      geom_point(aes(x = Wind, y = Temp, col = "Observed values")) +
+      geom_segment(aes(x = Wind, xend = Wind, y = Temp,yend = Temp_pred)) +
+      theme_bw() +
+      ggsci::scale_color_aaas()
+
+![](HW9_TA_files/figure-markdown_strict/unnamed-chunk-13-1.png)
+
 C.
 --
 
 Look at the residuals. Are they close to zero?
 
-    #look at the median residual value. Close to zero is best
-    #help(summary)
+    summary(linear_regression)
+
+    ## 
+    ## Call:
+    ## lm(formula = Temp ~ Wind, data = airquality)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -23.291  -5.723   1.709   6.016  19.199 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  90.1349     2.0522  43.921  < 2e-16 ***
+    ## Wind         -1.2305     0.1944  -6.331 2.64e-09 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 8.442 on 151 degrees of freedom
+    ## Multiple R-squared:  0.2098, Adjusted R-squared:  0.2045 
+    ## F-statistic: 40.08 on 1 and 151 DF,  p-value: 2.642e-09
+
+The median residual is 1.709 which is not too bad. But if you look at
+the 1st and 3rd Quartile, as well as the max and min residuals, they are
+quite large given that Temp has a range of ~40.
 
 D.
 --
@@ -253,11 +327,30 @@ D.
 Plot predicted temperature vs observed temperature. A strong model
 should show a strong correlation.
 
+    ggplot(data = plot_lin_pred) +
+      geom_point(aes(x=Temp, y = Temp_pred)) +
+      ggtitle("True Temp Value vs Predicted Temp Value Linear Regression") +
+      theme_bw()
+
+![](HW9_TA_files/figure-markdown_strict/unnamed-chunk-15-1.png)
+
 E.
 --
 
 Plot Wind vs predicted Temperature, and on the same plot, add Wind vs
 measured Temperature, and the regression line.
+
+    # Extract coefficients from the model
+    # plot the regression line on the predicted values
+    # plot the original test values
+
+    ggplot(data = plot_lin_pred) +
+      geom_point(aes(Wind, Temp_pred), color = "red") +
+      geom_point(aes(Wind, Temp), color = "dark blue") +
+      geom_abline(aes(intercept = 90.493474, slope = -1.27743, col="Regression Line"))  +
+      theme_bw()
+
+![](HW9_TA_files/figure-markdown_strict/unnamed-chunk-16-1.png)
 
 F.
 --
@@ -265,8 +358,31 @@ F.
 Residuals should be normally distributed. Plot the density of the
 residuals. Are they normally distributed? (help(residuals))
 
+    residuals_lin <- residuals(linear_regression)
+    residvpredict <- data.frame(residual = residuals_lin, Wind = airquality$Wind)
+
+    ggplot(data=residvpredict) +
+      geom_density(aes(residual)) +
+      theme_bw()
+
+![](HW9_TA_files/figure-markdown_strict/unnamed-chunk-17-1.png)
+
 G.
 --
 
 Independent variables and residuals should not be correlated. Calculate
 the correlation between the Wind and the residuals.
+
+    cor.test(residvpredict$Wind, residvpredict$residual)
+
+    ## 
+    ##  Pearson's product-moment correlation
+    ## 
+    ## data:  residvpredict$Wind and residvpredict$residual
+    ## t = -1.4892e-15, df = 151, p-value = 1
+    ## alternative hypothesis: true correlation is not equal to 0
+    ## 95 percent confidence interval:
+    ##  -0.1586781  0.1586781
+    ## sample estimates:
+    ##          cor 
+    ## -1.21187e-16
