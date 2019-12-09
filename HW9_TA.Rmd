@@ -62,6 +62,20 @@ chisq.test(cont)
 
 * Reject null? (Y/N) and why: Yes, because it is unlikely that Species and Death are independent (Pvalue 4.743e-06)
 
+## Alternative B. 
+
+* Null Hypothesis: There is no difference between the number of deaths in Species A and the number of deaths in Species B. 
+
+* Test used and reason: We use a T-test because we are comparing the mean number of deaths. 
+
+* P-value: 
+```{r}
+t.test(snails$Deaths ~ snails$Species)
+```
+
+
+* Reject null? (Y/N) and why: Yes, because it is unlikely that the number of deaths are the same between each species. (Pvalue 0.002432)
+
 
 # Question 2. 
 Now we will use the thyroid data. We want to know whether patients treated with different doses of the drug sorafenib respond differently. Split the patients into high treatment and low treatment at your discretion. Keep in mind that a more even split in the number of patients in each group is better. 
@@ -158,46 +172,81 @@ ggplot(data = airquality) +
 ## A.
 Create and fit a linear model to predict Temperature from Wind.
 
-```{r, include = F}
-#linear_regression <- lm(Temp ~ Wind, data = airquality)
+```{r}
+linear_regression <- lm(Temp ~ Wind, data = airquality)
 ```
 
 
 ## B.
 Vizualize how your model performed on the data by plotting the regression line on top of the data points. 
+```{r}
+linear_predict <- predict(linear_regression)
+plot_lin_pred <- data.frame(Temp_pred = linear_predict, Temp = airquality$Temp, Wind = airquality$Wind)
+
+# Extract coefficients from the model, plot the regression line on the predicted values, plot the original test values
+linear_regression$finalModel$coefficients
+
+ggplot(data = plot_lin_pred)+
+  geom_point(aes(x=Wind, y = Temp_pred, col =  "Predicted")) + 
+  ggtitle("Linear Regression model on Test Set") +
+  geom_abline(aes(intercept = 90.493474, slope = -1.27743, col="Regression Line")) +
+  geom_point(aes(x = Wind, y = Temp, col = "Observed values")) +
+  geom_segment(aes(x = Wind, xend = Wind, y = Temp,yend = Temp_pred)) +
+  theme_bw() +
+  ggsci::scale_color_aaas()
+
+```
 
 
 ## C. 
 Look at the residuals. Are they close to zero? 
 ```{r}
-#look at the median residual value. Close to zero is best
-#help(summary)
+summary(linear_regression)
 ```
-
+The median residual is 1.709 which is not too bad. But if you look at the 1st and 3rd Quartile, as well as the max and min residuals, they are quite large given that Temp has a range of ~40. 
 
 ## D. 
 Plot predicted temperature vs observed temperature. A strong model should show a strong correlation.
+```{r}
+
+ggplot(data = plot_lin_pred) +
+  geom_point(aes(x=Temp, y = Temp_pred)) +
+  ggtitle("True Temp Value vs Predicted Temp Value Linear Regression") +
+  theme_bw()
+
+```
 
 
 ## E. 
 Plot Wind vs predicted Temperature, and on the same plot, add Wind vs measured Temperature, and the regression line.
-```{r, include = FALSE}
+```{r}
 # Extract coefficients from the model
 # plot the regression line on the predicted values
 # plot the original test values
+
+ggplot(data = plot_lin_pred) +
+  geom_point(aes(Wind, Temp_pred), color = "red") +
+  geom_point(aes(Wind, Temp), color = "dark blue") +
+  geom_abline(aes(intercept = 90.493474, slope = -1.27743, col="Regression Line"))  +
+  theme_bw()
+
+  
 ```
 
 ## F. 
 Residuals should be normally distributed. Plot the density of the residuals. Are they normally distributed? (help(residuals))
-```{r, include= FALSE}
-#residuals_lin <- residuals(linear_regression)
-#ggplot(data=residvpredict) +
-#  geom_density(aes(residual))
+```{r}
+residuals_lin <- residuals(linear_regression)
+residvpredict <- data.frame(residual = residuals_lin, Wind = airquality$Wind)
+
+ggplot(data=residvpredict) +
+  geom_density(aes(residual)) +
+  theme_bw()
 ```
 
 ## G.
 Independent variables and residuals should not be correlated. Calculate the correlation between the Wind and the residuals. 
-```{r, include = FALSE}
-#cor.test(train_regression$Wind, resid(linear_regression))
+```{r}
+cor.test(residvpredict$Wind, residvpredict$residual)
 ```
 
