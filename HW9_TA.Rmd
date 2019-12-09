@@ -19,7 +19,7 @@ The Zoology department of The University of Adelaide was curious to see if Nativ
 
 ## A. 
  Plot a boxplot for each relative humitidy (one new plot for 60%, 65.8%, 70.5%, and 75.8% relative humidity). The x axis of the boxplot should be Temperature, the y axis should the the number of deaths, and the boxplots should be filled with the species type. 
-```{r boxplot, echo = FALSE}
+```{r boxplot}
 ggplot(snails, aes(x = as.factor(Temp), y = Deaths, fill = Species)) +
   geom_boxplot() +
   xlab("Temperature") +
@@ -33,20 +33,56 @@ Use the appropriate statistical test to investigate whether Species A survives b
 
 Please report your answer by filling in the blanks below. 
 
-* Null Hypothesis: 
+* Null Hypothesis: There is no relationship between Species and Number of Deaths. 
 
-* Test used and reason:
+* Test used and reason: We use Chi-squared because we are interested in the relationship between two categorical variables (Species and Death) and we want to see if they are independent. 
 
-* P-value:
+* P-value: 
+```{r}
+sixty_rel <- snails %>% 
+  filter(Rel.Hum == 60)
 
-* Reject null? (Y/N) and why:
+# lets make a contingency table to clarify what we want
+# at each condition there are 20 snails
+
+
+print(cont <- sixty_rel %>% 
+  group_by(Species) %>% 
+  mutate(total_number_snails = sum(N)) %>% 
+  mutate(total_number_deaths = sum(Deaths)) %>% 
+  mutate(total_number_live_snails = total_number_snails - total_number_deaths) %>% 
+  dplyr::select(Species, total_number_live_snails, total_number_deaths) %>% 
+  distinct() %>% 
+  column_to_rownames("Species"))
+
+
+chisq.test(cont)
+```
+
+
+* Reject null? (Y/N) and why: Yes, because it is unlikely that Species and Death are independent (Pvalue 4.743e-06)
 
 
 # Question 2. 
 Now we will use the thyroid data. We want to know whether patients treated with different doses of the drug sorafenib respond differently. Split the patients into high treatment and low treatment at your discretion. Keep in mind that a more even split in the number of patients in each group is better. 
+```{r, echo = FALSE, include = FALSE}
+load("../../../Downloads/thyroid.RData")
+```
+
+```{r}
+thyroid <- thyroid %>% 
+  mutate(patient_split = ifelse(avgdose > 600, "High", "Low")) %>% 
+  filter(!is.na(patient_split))
+```
 
 ## A. 
 Plot a boxplot of tumor response in the two patient groups. The x axis should be patient groups, the y axis should be tumor response.
+```{r}
+ggplot(thyroid, aes(x = patient_split, y = bestresp, fill = patient_split)) +
+  geom_boxplot() +
+  theme_bw() + 
+  ggsci::scale_fill_futurama()
+```
 
 
 ## B. 
@@ -54,27 +90,43 @@ Use the appropriate statistical test to investigate whether tumor response is di
 
 Please report your answer by filling in the blanks below. 
 
-* Null Hypothesis: 
+* Null Hypothesis: The mean best response between the two patient groups are the same. 
 
-* Test used and reason:
+* Test used and reason: We use a T-test because we are comparing the means of bestresp. 
 
 * P-value:
+```{r}
+t.test(thyroid$bestresp ~ thyroid$patient_split)
+```
 
-* Reject null? (Y/N) and why:
+* Reject null? (Y/N) and why: At the arbitrarily chosen significance level of 0.05, we fail to reject the null hypothesis because P > 0.05. However, as Dr. Troxel mentioned in class, we are moving away from using an arbitrary significance level and moving towards embracing uncertainty, so this question was not great. Sorry!
+
 
 # Question 3. 
 
 ## A
 You want to design a new study comparing a new chemotherapy to radiation for breast cancer. The outcome you are measuring is the reduction of tumor size. You want a sample size of n=100/treatment arm. You expect that the average difference in tumor size reduction in the chemotherapy group vs radiation group will be 2, and standard deviation will be equal to 5. What power will this yield?
+```{r}
+power.t.test(n=100, delta=2, sd=5, power=NULL)
+```
+
 
 ## B
 If we wanted 90% power, what sample size would we need? (Keeping all other parameters the same)
+```{r}
+power.t.test(n=NULL, delta=2, sd=5, power=0.90)
+```
+
 
 ## C
 How would the power be affected by decreasing the standard deviation? 
 
+Power decreases with increasing standard deviation. 
+
 ## D
 How would the power be affected by increasing the effect size?
+
+The power increases by increasing the effect size. 
 
 
 # Question 4. 
